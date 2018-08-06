@@ -9,6 +9,12 @@ char cruciverba[RIGHE+2][COLONNE+2]; //matrice che rappresenta il cruciverba
 int tabUtilizzo[LPAROLE][NPAROLE]; //matrice che tiene traccia dell'utilizzo delle parole del dizionario: 0 non usata, 1 gia' usata;
 
 
+
+//INIZIO RESTYLING
+
+
+
+
 //==================================================================
 //==================================================================
 //Funzioni per copiare parole dal dizionario al cruciverba
@@ -25,14 +31,20 @@ void copiaNelCruciverbaO(const char * const stringa,const int riga, const int co
     //se non scrivo su un carattere di terminazione
     if('\0'==cruciverba[riga][colonna+a])
       printf("Errore copiaNelCruciverbaO: tentata scrittura di \'%c\' su carattere di terminazione [%d,%d]\n",stringa[a],riga,colonna+a);
-    else
+    else if(cruciverba[riga][colonna+a]==stringa[a]||cruciverba[riga][colonna+a]=' ') 
       cruciverba[riga][colonna+a]=stringa[a];  //copio normalmente
+    else
+      printf("Errore copiaNelCruciverbaO: tentata scrittura di \'%c\' su carattere diverso [%d,%d]\n",stringa[a],riga,colonna+a);
 
-  //copio anche carattere di terminazione (quadratino nero nel cruciverba finito)
-  cruciverba[riga][colonna+a]='\0'; 
+  //copio anche carattere di terminazione (quadratino nero nel cruciverba finito) se e solo se e' vuoto o con gia un carattere di terminazione
+  if(cruciverba[riga][colonna+a]=='\0'||cruciverba[riga][colonna+a]==' ')
+    cruciverba[riga][colonna+a]='\0';
+  else
+      printf("Errore copiaNelCruciverbaO: tentata scrittura di \'#\' su carattere [%d,%d]\n",riga,colonna+a);
   
   return;
 }
+
 
 //non sovrascrive caratteri preesistenti
 void copiaAsteriscoNelCruciverbaO(const char * const stringa,const int riga, const int colonna){
@@ -43,17 +55,20 @@ void copiaAsteriscoNelCruciverbaO(const char * const stringa,const int riga, con
     //se non scrivo su un carattere di terminazione
     if('\0'==cruciverba[riga][colonna+a])
       printf("Errore copiaAsteriscoO: tentata scrittura di \'%c\' su carattere di terminazione [%d,%d]\n",stringa[a],riga,colonna+a);
-    else if(!isalpha(cruciverba[riga][colonna+a])) //se non scrivo su una lettera
+    else if(cruciverba[riga][colonna+a]==' ') //se scrivo su uno spazio vuoto
       cruciverba[riga][colonna+a]=stringa[a];  //copio normalmente
 
   //copio anche carattere di terminazione (quadratino nero nel cruciverba finito)
-  cruciverba[riga][colonna+a]='\0'; 
+  if(cruciverba[riga][colonna+a]=='\0'||cruciverba[riga][colonna+a]==' ')
+    cruciverba[riga][colonna+a]='\0';
+  else
+      printf("Errore copiaAsterischiNelCruciverbaO: tentata scrittura di \'#\' su carattere [%d,%d]\n",riga,colonna+a);
   
   return;
 }
 
 
-//funzione che copia una stringa del dizionario nel cruciverba in verticalmente
+//funzione che copia una stringa del dizionario nel cruciverba verticalmente
 //ATTENZIONE: la funzione deve essere chiamata solo se si e' sicuri che la stringa entri nella tabella
 void copiaNelCruciverbaV(const char * const stringa,const int riga, const int colonna){
   int a;
@@ -63,14 +78,21 @@ void copiaNelCruciverbaV(const char * const stringa,const int riga, const int co
     //se non scrivo su un carattere di terminazione
     if('\0'==cruciverba[riga+a][colonna])
       printf("Errore copiaNelCruciverbaV: tentata scrittura di \'%c\' su carattere di terminazione [%d,%d]\n",stringa[a],riga+a,colonna);
-    else
+    else if(cruciverba[riga+a][colonna]==' '||cruciverba[riga+a][colonna]==stringa[a])
       cruciverba[riga+a][colonna]=stringa[a];  //copio normalmente
-
+    else
+      printf("Errore copiaNelCruciverbaV: tentata scrittura di \'%c\' su carattere diverso [%d,%d]\n",stringa[a],riga+a,colonna);
+  
   //copio anche carattere di terminazione (quadratino nero nel cruciverba finito)
-  cruciverba[riga+a][colonna]='\0'; 
+  if(cruciverba[riga+a][colonna]=='\0'||cruciverba[riga+a][colonna]==' ')
+    cruciverba[riga+a][colonna]='\0';
+  else
+    printf("Errore copiaNelCruciverbaV: tentata scrittura di \'#\' su carattere [%d,%d]\n",riga,colonna+a);
   
   return;
 }
+
+
 
 //non sovrascrivo su caratteri preesistenti
 void copiaAsteriscoNelCruciverbaV(const char * const stringa,const int riga, const int colonna){
@@ -82,14 +104,20 @@ void copiaAsteriscoNelCruciverbaV(const char * const stringa,const int riga, con
     if('\0'==cruciverba[riga+a][colonna])
       printf("Errore copiaAsteriscoV: tentata scrittura di \'%c\' su carattere di terminazione [%d,%d]\n",stringa[a],riga+a,colonna);
  
-    else if(!isalpha(cruciverba[riga+a][colonna])) //se non scrivo su una lettera
+    else if(' '==cruciverba[riga+a][colonna]) //se scrivo in uno spazio vuoto
       cruciverba[riga+a][colonna]=stringa[a];  //copio normalmente
+  
 
   //copio anche carattere di terminazione (quadratino nero nel cruciverba finito)
-  cruciverba[riga+a][colonna]='\0'; 
+  if('\0'==cruciverba[riga+a][colonna]||' '==cruciverba[riga+a][colonna]) //se non scrivo su una lettera
+      cruciverba[riga+a][colonna]='\0'; 
+  else
+    printf("Errore copiaAsterischiNelCruciverbaV: tentata scrittura di \'#\' su carattere [%d,%d]\n",riga+a,colonna);
   
   return;
 }
+
+
 
 
 //==================================================================
@@ -119,77 +147,12 @@ int contaOrizzontale(const int riga,const int colonna){
   return a-colonna;
 }
 
-
-//==================================================================
-//==================================================================
-//Funzioni per estrarre parole dal dizionario 
-//==================================================================
-//==================================================================
-
-//funzione che estrae una parola di lunghezza assegnata dal dizionario
-//se dovesse essere gia stata usata la parola estratta a sorte ricerca a seguire la parola
-//se dovessero essere tutte gia' usate restituisce NULL
-char * sorteggiaParola(const int lunghezza){
-  int n;
-  char *ptr;
-
-  //controllo che esistano parole non usate
-  for(n=0;NPAROLE>n && tabUtilizzo[lunghezza-3][n];n++);
-
-  //se ho finito il ciclo precedente non esistono parole
-  if(NPAROLE==n)
-    ptr=NULL;
-
-  //se esistono parole 
-  else{
-    //ne sorteggio una
-    n=rand()%NPAROLE;
-
-    //se non va bene scorro fino a trovarne una buona
-    while(tabUtilizzo[lunghezza-3][n])
-      //se incrementando uscirei dalla matrice
-      if(++n>=NPAROLE)
-	n=0;//torno dentro
-      else
-	n++;
-
-    //restituisco la parola trovata
-    ptr=dizionario[lunghezza-3][n];
-
-    //aggiorno tabella utilizzi
-    tabUtilizzo[lunghezza-3][n]=1;
-  }
-  
-  return ptr;
-}
-
-//funzione che restituisce una lunghezza tra 3 e max
-int sorteggiaLunghezza(int max){
-  int n;
-  
-  //evito di richiedere parole di una lunghezza non supportata
-  if(max>LPAROLE+2)
-    max=LPAROLE+2;//(+2 perche salto le parole di una e due lettere nel dizionario)
-
-  if(3==max)
-    n=3;//c'e' poco da sorteggiare...
-  else{
-    max=max-2;// 
-    n=rand()%max+3;//non restituisco l'indice ma la lunghezza della parola
-  }
-  return n;
-}
-
-//funzione che estrae una parola casuale dal dizionario di lunghezza massima uguale a max e lunghezza minima uguale a tre
-char * parola(const int max){
-  return sorteggiaParola(sorteggiaLunghezza(max));
-}
-
+//FINE RESTYLING
 
 
 //==================================================================
 //==================================================================
-//Funzione per inizializzare il cruciverba e la tabUtilizzo
+//Funzione per inizializzare il cruciverba 
 //==================================================================
 //==================================================================
 
@@ -650,5 +613,71 @@ int cruciFill3(){
       }
 
   return bene;
+}
+
+
+//==================================================================
+//==================================================================
+//Funzioni per estrarre parole dal dizionario 
+//==================================================================
+//==================================================================
+
+//funzione che estrae una parola di lunghezza assegnata dal dizionario
+//se dovesse essere gia stata usata la parola estratta a sorte ricerca a seguire la parola
+//se dovessero essere tutte gia' usate restituisce NULL
+char * sorteggiaParola(const int lunghezza){
+  int n;
+  char *ptr;
+
+  //controllo che esistano parole non usate
+  for(n=0;NPAROLE>n && tabUtilizzo[lunghezza-3][n];n++);
+
+  //se ho finito il ciclo precedente non esistono parole
+  if(NPAROLE==n)
+    ptr=NULL;
+
+  //se esistono parole 
+  else{
+    //ne sorteggio una
+    n=rand()%NPAROLE;
+
+    //se non va bene scorro fino a trovarne una buona
+    while(tabUtilizzo[lunghezza-3][n])
+      //se incrementando uscirei dalla matrice
+      if(++n>=NPAROLE)
+	n=0;//torno dentro
+      else
+	n++;
+
+    //restituisco la parola trovata
+    ptr=dizionario[lunghezza-3][n];
+
+    //aggiorno tabella utilizzi
+    tabUtilizzo[lunghezza-3][n]=1;
+  }
+  
+  return ptr;
+}
+
+//funzione che restituisce una lunghezza tra 3 e max
+int sorteggiaLunghezza(int max){
+  int n;
+  
+  //evito di richiedere parole di una lunghezza non supportata
+  if(max>LPAROLE+2)
+    max=LPAROLE+2;//(+2 perche salto le parole di una e due lettere nel dizionario)
+
+  if(3==max)
+    n=3;//c'e' poco da sorteggiare...
+  else{
+    max=max-2;// 
+    n=rand()%max+3;//non restituisco l'indice ma la lunghezza della parola
+  }
+  return n;
+}
+
+//funzione che estrae una parola casuale dal dizionario di lunghezza massima uguale a max e lunghezza minima uguale a tre
+char * parola(const int max){
+  return sorteggiaParola(sorteggiaLunghezza(max));
 }
 
