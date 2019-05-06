@@ -9,9 +9,11 @@
 #ifdef LINUX
  
   #define NPAROLE 15  //Numero di parole per ogni lunghezza
-  #define LPAROLE 7   //Nuero di lunghezze di parole
+  #define LPAROLE 9   //Nuero di lunghezze di parole
 
   char *dizionario[LPAROLE][NPAROLE]={
+    {'E', 'S', 'C', 'W', 'O', 'W', 'I', 'N', 'F', 'X', 'Y', 'U', 'Y', 'N', 'G'},  //random letters of length 1
+    {'SB', 'AD', 'IZ', 'MP', 'LL', 'FS', 'UG', 'EE', 'FD', 'VB', 'UT', 'EK', 'TD', 'CM', 'ML'},  //random letter of length 2
     {"GNU","TUX","LUG","MIT","GCC","GPG","APT","NSA","GIT","FSF","EFF","USB","NOX","UNI","TOR"},          
     {"ARCH","RUST","MEGA","HTML","SUDO","ROOT","SNAP","KALI","LEAK","WINE","INIT","UDOO","SENX","EINK","BASH"},   
     {"LINUS","LINUX","UNIX","PRISM","APPLE","TERES","INODE","NIXON","PUPPY","EMACS","INTEL","GNOME","ORFOX","UNITY","REDOX"}, 
@@ -26,9 +28,11 @@
 #ifdef GENERICO
  
   #define NPAROLE 20  //Numero di parole per ogni lunghezza
-  #define LPAROLE 7   //Nuero di lunghezze di parole
+  #define LPAROLE 9   //Nuero di lunghezze di parole
 
   char *dizionario[LPAROLE][NPAROLE]={
+      {'E', 'S', 'C', 'W', 'O', 'W', 'I', 'N', 'F', 'X', 'Y', 'U', 'Y', 'N', 'G', 'S', 'C', 'W', 'O', 'W'},  //random letters of length 1
+      {'SB', 'AD', 'IZ', 'MP', 'LL', 'FS', 'UG', 'EE', 'FD', 'VB', 'UT', 'EK', 'TD', 'CM', 'ML', 'VB', 'UT', 'EK', 'TD', 'CM'},  //random letter of length 2
     {"GNU","TUX","LUG","MIT","GCC","GPG","APT","NSA","GIT","FSF","EFF","USB","NOX","UNI","TOR","DIE","CPU","ALU","AMD","DIR"},          
     {"ARCH","RUST","MEGA","HTML","SUDO","ROOT","SNAP","KALI","LEAK","WINE","INIT","UDOO","SENX","EINK","BASH","AMOR","OREO","NODO","NATO","CINA"},
     
